@@ -3,7 +3,7 @@
 Plugin Name: Member Minder
 Plugin URI: http://jamesmandrews.com/projects/member-minder
 Description: A plugin to allow management of content to a member base.
-Version: v0.0.1
+Version: v0.5
 Author: James Andrews
 Author URI: http://jamesmandrews.com
 */
