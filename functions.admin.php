@@ -1,8 +1,5 @@
 <?php
 
-    // Define necessary variables.
-    define("MM_PERMISIONS_META_KEY", '_member_minder_permissions');
-
     /**
      * Gets an array list of editable roles excluding the defalt wordpress roles.
      *
@@ -66,6 +63,12 @@
         include('views/admin/content_permissions.php');
     }    
     
+    /**
+     * Save the what roles can view the content of a post/page.
+     *
+     * @author  James Andrews <project_support@jamesmandrews.com>
+     * @since 0.0.1
+     */
     function member_minder_save_content_permissions()
     {
         global $post_id;

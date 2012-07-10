@@ -8,8 +8,14 @@ Author: James Andrews
 Author URI: http://jamesmandrews.com
 */
 
+// Define necessary constants.
+define("MM_PERMISIONS_META_KEY", '_member_minder_permissions');
+
+
 include('functions.general.php');
 include('functions.admin.php');
+
+
 
 // Create the wp_roles object needed to list roles.
 if ( ! isset( $wp_roles ) ) $wp_roles = new WP_Roles();
@@ -24,4 +30,4 @@ if (is_admin())
 
 // Intercept the_content before it is displayed to the user.
 add_filter('the_content', 'member_minder_the_content_filter');
-
+add_filter('comments_template', 'member_minder_comments_template_filter');
