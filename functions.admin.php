@@ -104,6 +104,12 @@
         }
     }
 
+    /**
+     * Register plugin settings.
+     *
+     * @author  James Andrews <project_support@jamesmandrews.com>
+     * @since 0.0.1
+     */
     function member_minder_register_settings()
     {
         register_setting( 'member_minder_options_group', 'member_minder_options', 'member_minder_options_validate');
@@ -111,11 +117,24 @@
         add_settings_field('member_minder_text_string', 'Unauthorized Access Message', 'member_minder_setting_string', 'member_minder_options_group', 'member_minder_main');
     }
     
+    
+    /**
+     * Options text currently returns an empty string.
+     *
+     * @author  James Andrews <project_support@jamesmandrews.com>
+     * @since 0.0.1
+     */
     function member_minder_main_options_text()
     {
         return "";
     }
     
+    /**
+     * Create the form field we'll use for settings.
+     * 
+     * @author  James Andrews <project_support@jamesmandrews.com>
+     * @since 0.0.1
+     */
     function member_minder_setting_string()
     {
         $options = get_option('member_minder_options');
@@ -129,16 +148,35 @@
 
     }
     
+    /**
+     * options validation function.  Return the input for now.
+     *
+     * @author  James Andrews <project_support@jamesmandrews.com>
+     * @since 0.0.1
+     */
     function member_minder_options_validate($input)
     {
         return $input;
     }
     
+    
+    /**
+     * Display the Memberminder Admin Menu link
+     *
+     * @author  James Andrews <project_support@jamesmandrews.com>
+     * @since 0.0.1
+     */
     function member_minder_admin_menu()
     {
         add_options_page('Member Minder', 'Member Minder', 'manage_options', 'member_minder', 'member_minder_options_page');
     }
  
+    /**
+     * Display the Memberminder admin page.
+     *
+     * @author  James Andrews <project_support@jamesmandrews.com>
+     * @since 0.0.1
+     */
     function member_minder_options_page()
     {
         if ( !current_user_can( 'manage_options' ) )  {
@@ -147,28 +185,3 @@
     	
         include('views/admin/options.php');
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
