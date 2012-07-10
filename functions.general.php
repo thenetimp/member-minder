@@ -59,7 +59,8 @@
         // If the user does not have permission to view the page get message to display.
         if(!member_minder_user_can_view_page($post->ID))
         {
-            $content = "Unauthorized to view this page.";
+            $options =  get_option('member_minder_options');
+            $content = $options['unauthorized_access_message'];
         }
         
         return $content;

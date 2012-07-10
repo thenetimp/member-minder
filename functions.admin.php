@@ -103,4 +103,72 @@
             update_post_meta($post_id, MM_PERMISIONS_META_KEY, $serialized_permissions, $current_permissions_meta);
         }
     }
+
+    function member_minder_register_settings()
+    {
+        register_setting( 'member_minder_options_group', 'member_minder_options', 'member_minder_options_validate');
+        add_settings_section('member_minder_main', '', 'member_minder_main_options_text', 'member_minder_options_group');
+        add_settings_field('member_minder_text_string', 'Unauthorized Access Message', 'member_minder_setting_string', 'member_minder_options_group', 'member_minder_main');
+    }
+    
+    function member_minder_main_options_text()
+    {
+        return "";
+    }
+    
+    function member_minder_setting_string()
+    {
+        $options = get_option('member_minder_options');
+        echo '<textarea rows="10" cols="75" name=member_minder_options[unauthorized_access_message]>' .
+        
+        ((isset($options['unauthorized_access_message'])) ? $options['unauthorized_access_message'] : "") .
+        
+        
+        '</textarea><br />';
+        echo '(You can use the following HTML tags &lt;p&gt; &lt;a&gt; &lt;br&gt; &lt;img&gt;)';
+
+    }
+    
+    function member_minder_options_validate($input)
+    {
+        return $input;
+    }
+    
+    function member_minder_admin_menu()
+    {
+        add_options_page('Member Minder', 'Member Minder', 'manage_options', 'member_minder', 'member_minder_options_page');
+    }
+ 
+    function member_minder_options_page()
+    {
+        if ( !current_user_can( 'manage_options' ) )  {
+    		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+    	}
+    	
+        include('views/admin/options.php');
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
