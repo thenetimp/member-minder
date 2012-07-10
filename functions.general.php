@@ -61,6 +61,7 @@
         {
             $options =  get_option('member_minder_options');
             $content = $options['unauthorized_access_message'];
+            if($content == "") $content ="You do not have permission to view this content";
         }
         
         return $content;
