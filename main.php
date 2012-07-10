@@ -30,4 +30,5 @@ if (is_admin())
 
 // Intercept the_content before it is displayed to the user.
 add_filter('the_content', 'member_minder_the_content_filter');
+add_filter( "the_content_feed", "member_minder_the_content_filter" )
 add_filter('comments_template', 'member_minder_comments_template_filter');
