@@ -34,17 +34,72 @@
         // Get the role of the curent user.
         $current_user_role = member_minder_get_current_user_role();
 
-        // If the user is only of level_0
-        // If the array has a length greater than 0 and the current user role
-        // does not exist in the permissions_meta array then return false.
-        if(!isset($wp_roles->roles[$current_user_role]['capabilities']['level_1']) && count($privileged_roles) > 0 && !in_array($current_user_role, $privileged_roles))
+        // Check if not show the user the content and if not return false.
+        if(member_minder_role_is_valid($current_user_role) && count($privileged_roles) > 0 && !in_array($current_user_role, $privileged_roles))
             return false;
 
-        // Else asume true;
+        // Else assume true;
         return true;
         
     }
-    
+
+    /**
+     * Checks to see if the role of the user has only the capability to "read" and/or is level_0
+     *
+     * @author  James Andrews <project_support@jamesmandrews.com>
+     * @since 0.7.2
+     * @param array $privileged_roles An array of roles that can view content on a page.
+     */
+    function member_minder_role_is_valid($current_user_role)
+    {
+        global $wp_roles;
+
+        // Assume the role is valid.
+        $valid = true;
+        
+        if(
+                // If we have a non logged in user they should not be able to see content.
+                (
+                    !isset($wp_roles->roles[$current_user_role]['capabilities'])
+                )
+                
+                // If we have 1 capablity and it is "read" then return trie.
+                ||
+                (
+                    isset($wp_roles->roles[$current_user_role]['capabilities']) &&
+                    count($wp_roles->roles[$current_user_role]['capabilities']) == 1 && 
+                    isset($wp_roles->roles[$current_user_role]['capabilities']['read']) &&
+                    $wp_roles->roles[$current_user_role]['capabilities']['read'] == true
+                )
+
+                // If we only have one role and it is "read" return trie
+                || 
+                (
+                    isset($wp_roles->roles[$current_user_role]['capabilities']) &&
+                    count($wp_roles->roles[$current_user_role]['capabilities']) == 1 && 
+                    isset($wp_roles->roles[$current_user_role]['capabilities']['read']) && 
+                    $wp_roles->roles[$current_user_role]['capabilities']['read'] == true
+                )
+                // If we have 2 capabilities and one is "read" and th other "level_0" then return true
+                ||
+                (
+                    isset($wp_roles->roles[$current_user_role]['capabilities']) &&
+                    count($wp_roles->roles[$current_user_role]['capabilities']) == 2 &&
+                    isset($wp_roles->roles[$current_user_role]['capabilities']['read']) &&
+                    isset($wp_roles->roles[$current_user_role]['capabilities']['level_0']) &&
+                    $wp_roles->roles[$current_user_role]['capabilities']['read'] == true &&
+                    $wp_roles->roles[$current_user_role]['capabilities']['level_0'] == true
+                )
+            )
+        {
+            return true;
+        }
+        // Return false for anything else.
+        else
+        {
+            return false;
+        }
+    }
     
     /**
      * Gets the role for the current logged in user.
